@@ -1,12 +1,7 @@
 import * as React from 'react';
 import useAxios from 'axios-hooks';
 
-import {
-  EActionKind,
-  TContextType,
-  TReducerAction,
-  TReducerState,
-} from '../Types/TrendingRepositoriesContext';
+import {EActionKind, TContextType, TReducerAction, TReducerState} from '../Types/TrendingRepositoriesContext';
 import useDebounce from '../Utils/Hooks/useDebbounce';
 import {ITrendingListItem} from '../Types/TrendingList';
 
@@ -21,10 +16,7 @@ const initialState: TReducerState = {
 
 const initialContext: TContextType = [initialState, () => {}];
 
-const reducer = (
-  state: TReducerState,
-  action: TReducerAction,
-): TReducerState => {
+const reducer = (state: TReducerState, action: TReducerAction): TReducerState => {
   switch (action.type) {
     case EActionKind.request:
       return {
@@ -51,23 +43,15 @@ const reducer = (
   }
 };
 
-export const TrendingRepositoriesContext =
-  React.createContext<TContextType>(initialContext);
+export const TrendingRepositoriesContext = React.createContext<TContextType>(initialContext);
 
 const TrendingRepositoriesProvider: React.FC = ({children}) => {
-  const [state, dispatchState] = React.useReducer<
-    React.Reducer<TReducerState, TReducerAction>
-  >(reducer, initialState);
-  const value = React.useMemo<[TReducerState, React.Dispatch<TReducerAction>]>(
-    () => [state, dispatchState],
-    [state],
-  );
+  const [state, dispatchState] = React.useReducer<React.Reducer<TReducerState, TReducerAction>>(reducer, initialState);
+  const value = React.useMemo<[TReducerState, React.Dispatch<TReducerAction>]>(() => [state, dispatchState], [state]);
 
   const debouncedSearch = useDebounce<string>(state.searchQuery, 500);
 
-  const query: string = debouncedSearch
-    ? `${debouncedSearch} in:name,description`
-    : 'trending';
+  const query: string = debouncedSearch ? `${debouncedSearch} in:name,description` : 'trending';
 
   const [{data, loading, error}, refetch] = useAxios<{
     items: ITrendingListItem[];
@@ -112,14 +96,9 @@ const TrendingRepositoriesProvider: React.FC = ({children}) => {
     refetch();
   }, [debouncedSearch]);
 
-  return (
-    <TrendingRepositoriesContext.Provider value={value}>
-      {children}
-    </TrendingRepositoriesContext.Provider>
-  );
+  return <TrendingRepositoriesContext.Provider value={value} children={children} />;
 };
 
-export const useTrendingRepositories = (): TContextType =>
-  React.useContext<TContextType>(TrendingRepositoriesContext);
+export const useTrendingRepositories = (): TContextType => React.useContext<TContextType>(TrendingRepositoriesContext);
 
 export default TrendingRepositoriesProvider;

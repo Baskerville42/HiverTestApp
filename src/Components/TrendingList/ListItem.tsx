@@ -25,29 +25,16 @@ const TrendingListItem: React.FC<TTrendingListItemProps> = ({item}) => {
     <View>
       <Pressable onPress={handleItemPress}>
         <ListItem>
-          <Avatar
-            source={{uri: item.owner.avatar_url}}
-            rounded
-            size={'small'}
-          />
+          <Avatar source={{uri: item.owner.avatar_url}} rounded size={'small'} />
           <ListItem.Content>
-            <ListItem.Title style={styles.title}>
-              {item.owner.login}
-            </ListItem.Title>
-            <ListItem.Subtitle style={styles.description}>
-              {item.name}
-            </ListItem.Subtitle>
+            <ListItem.Title style={styles.title}>{item.owner.login}</ListItem.Title>
+            <ListItem.Subtitle style={styles.description}>{item.name}</ListItem.Subtitle>
           </ListItem.Content>
         </ListItem>
       </Pressable>
-      <Collapsible
-        collapsed={Number(item.id) !== Number(context.expandedId)}
-        align="center">
+      <Collapsible collapsed={Number(item.id) !== Number(context.expandedId)} align="center">
         <View style={styles.content}>
-          <Text
-            style={
-              styles.descriptionText
-            }>{`${item.description} (${item.html_url})`}</Text>
+          <Text style={styles.descriptionText}>{`${item.description} (${item.html_url})`}</Text>
           <View style={styles.rowInfo}>
             {item.language && (
               <View style={styles.iconContainer}>

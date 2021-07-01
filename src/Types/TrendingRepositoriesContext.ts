@@ -41,10 +41,6 @@ export type TExpandAction = {
   payload: null | number;
 };
 
-export type TReducerAction =
-  | TRequestAction
-  | TSearchAction
-  | TExpandAction
-  | TRetryAction;
+export type TReducerAction = TRequestAction | TSearchAction | TExpandAction | TRetryAction;
 
 export type TContextType = [TReducerState, React.Dispatch<TReducerAction>];

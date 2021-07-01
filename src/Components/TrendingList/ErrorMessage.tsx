@@ -18,10 +18,7 @@ const ErrorMessage: React.FC = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Image
-          source={require('../../Assets/Images/aliensSpaceShuttle.png')}
-          style={styles.aliensSpaceShuttle}
-        />
+        <Image source={require('../../Assets/Images/aliensSpaceShuttle.png')} style={styles.aliensSpaceShuttle} />
         <Text style={styles.header}>Something went wrong...</Text>
         <Text style={styles.text}>An alien probably blocking your signal</Text>
       </View>

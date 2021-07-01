@@ -17,11 +17,7 @@ const TrendingList: React.FC = () => {
 
   const keyExtractor = (item: ITrendingListItem): string => String(item.id);
 
-  const renderItem = ({
-    item,
-  }: {
-    item: ITrendingListItem;
-  }): React.ReactElement => <TrendingListItem item={item} />;
+  const renderItem = ({item}: {item: ITrendingListItem}): React.ReactElement => <TrendingListItem item={item} />;
 
   if (context.error) return null;
 
